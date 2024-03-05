@@ -1,0 +1,25 @@
+import asyncio
+from radiometer_service.radiometer_service import RadiometerService
+
+r = RadiometerService('https://localhost:7209/', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBcGlVc2VyIiwibmJmIjoxNzA5NjM2Mzk3LCJleHAiOjE3MDk3MjI3OTcsImlzcyI6IlNlcnZlciIsImF1ZCI6IkNsaWVudCJ9.j7Gb3of8h2TXY24cczOJXKPkj4dhUVj47tjcItmjcXE')
+devices = r.get_devices()
+print(devices)
+patients = r.get_patients()
+print(patients)
+measurements = r.get_measurements()
+print(measurements)
+measurement = r.get_measurement(1)
+print(measurement)
+calibrations = r.get_calibrations()
+print(calibrations)
+
+devices_async = asyncio.run(r.get_devices_async())
+print(devices_async)
+patients_async = asyncio.run(r.get_patients_async())
+print(patients_async)
+measurements_async = asyncio.run(r.get_measurements_async())
+print(measurements_async)
+measurement_async = asyncio.run(r.get_measurement_async(1))
+print(measurement_async)
+calibrations_async = asyncio.run(r.get_calibrations_async())
+print(calibrations_async)
