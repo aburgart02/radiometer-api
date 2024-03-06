@@ -1,15 +1,24 @@
 import json
 import requests
-import aiohttp
+from aiohttp import ClientSession
 
 
 class RadiometerService:
-    def __init__(self, server_address='', token=''):
+    def __init__(self, server_address: str, token: str, session: ClientSession = None):
         if not server_address.endswith('/'):
             server_address += '/'
         self.__server_address = server_address
         self.__token = token
+        self.__session = session
         self.__headers = {"Authorization": f'Bearer {self.__token}'}
+
+        self.__devices_path = 'devices'
+        self.__patients_path = 'patients'
+        self.__measurements_path = 'measurements'
+        self.__measurements_with_data_path = 'measurements-with-data'
+        self.__measurement_path = 'measurement'
+        self.__measurement_with_data_path = 'measurement-with-data'
+        self.__calibrations_path = 'calibrations'
 
     def get_server_address(self) -> str:
         return self.__server_address
@@ -26,72 +35,82 @@ class RadiometerService:
         self.__token = token
         self.__headers = {"Authorization": f'Bearer {self.__token}'}
 
+    def set_session(self, session: ClientSession) -> None:
+        self.__session = session
+
     def get_devices(self) -> list:
-        devices = requests.get(f'{self.__server_address}devices', headers=self.__headers, verify=False)
+        devices = requests.get(f'{self.__server_address}{self.__devices_path}', headers=self.__headers, verify=False)
         return json.loads(devices.content)
 
     async def get_devices_async(self) -> list:
-        async with aiohttp.ClientSession() as session:
-            async with session.get(f'{self.__server_address}devices', headers=self.__headers) as response:
-                data = await response.read()
-                return json.loads(data)
+        if self.__session is None:
+            raise AttributeError('Session is None')
+        async with self.__session.get(f'{self.__server_address}{self.__devices_path}', headers=self.__headers) as response:
+            data = await response.read()
+            return json.loads(data)
 
     def get_patients(self) -> list:
-        patients = requests.get(f'{self.__server_address}patients', headers=self.__headers, verify=False)
+        patients = requests.get(f'{self.__server_address}{self.__patients_path}', headers=self.__headers, verify=False)
         return json.loads(patients.content)
 
     async def get_patients_async(self) -> list:
-        async with aiohttp.ClientSession() as session:
-            async with session.get(f'{self.__server_address}patients', headers=self.__headers) as response:
-                data = await response.read()
-                return json.loads(data)
+        if self.__session is None:
+            raise AttributeError('Session is None')
+        async with self.__session.get(f'{self.__server_address}{self.__patients_path}', headers=self.__headers) as response:
+            data = await response.read()
+            return json.loads(data)
 
     def get_measurements(self) -> list:
-        measurements = requests.get(f'{self.__server_address}measurements', headers=self.__headers, verify=False)
+        measurements = requests.get(f'{self.__server_address}{self.__measurements_path}', headers=self.__headers, verify=False)
         return json.loads(measurements.content)
 
     async def get_measurements_async(self) -> list:
-        async with aiohttp.ClientSession() as session:
-            async with session.get(f'{self.__server_address}measurements', headers=self.__headers) as response:
-                data = await response.read()
-                return json.loads(data)
+        if self.__session is None:
+            raise AttributeError('Session is None')
+        async with self.__session.get(f'{self.__server_address}{self.__measurements_path}', headers=self.__headers) as response:
+            data = await response.read()
+            return json.loads(data)
 
     def get_measurements_with_data(self) -> list:
-        measurements = requests.get(f'{self.__server_address}measurements-with-data', headers=self.__headers, verify=False)
+        measurements = requests.get(f'{self.__server_address}{self.__measurements_with_data_path}', headers=self.__headers, verify=False)
         return json.loads(measurements.content)
 
     async def get_measurements_with_data_async(self) -> list:
-        async with aiohttp.ClientSession() as session:
-            async with session.get(f'{self.__server_address}measurements-with-data', headers=self.__headers) as response:
-                data = await response.read()
-                return json.loads(data)
+        if self.__session is None:
+            raise AttributeError('Session is None')
+        async with self.__session.get(f'{self.__server_address}{self.__measurements_with_data_path}', headers=self.__headers) as response:
+            data = await response.read()
+            return json.loads(data)
 
     def get_measurement(self, measurement_id: int) -> bytes:
-        measurement = requests.get(f'{self.__server_address}measurement/{measurement_id}', headers=self.__headers, verify=False)
+        measurement = requests.get(f'{self.__server_address}{self.__measurement_path}/{measurement_id}', headers=self.__headers, verify=False)
         return json.loads(measurement.content)
 
     async def get_measurement_async(self, measurement_id: int) -> bytes:
-        async with aiohttp.ClientSession() as session:
-            async with session.get(f'{self.__server_address}measurement/{measurement_id}', headers=self.__headers) as response:
-                data = await response.read()
-                return json.loads(data)
+        if self.__session is None:
+            raise AttributeError('Session is None')
+        async with self.__session.get(f'{self.__server_address}{self.__measurement_path}/{measurement_id}', headers=self.__headers) as response:
+            data = await response.read()
+            return json.loads(data)
 
     def get_measurement_with_data(self, measurement_id: int) -> bytes:
-        measurement = requests.get(f'{self.__server_address}measurement-with-data/{measurement_id}', headers=self.__headers, verify=False)
+        measurement = requests.get(f'{self.__server_address}{self.__measurement_with_data_path}/{measurement_id}', headers=self.__headers, verify=False)
         return json.loads(measurement.content)
 
     async def get_measurement_with_data_async(self, measurement_id: int) -> bytes:
-        async with aiohttp.ClientSession() as session:
-            async with session.get(f'{self.__server_address}measurement-with-data/{measurement_id}', headers=self.__headers) as response:
-                data = await response.read()
-                return json.loads(data)
+        if self.__session is None:
+            raise AttributeError('Session is None')
+        async with self.__session.get(f'{self.__server_address}{self.__measurement_with_data_path}/{measurement_id}', headers=self.__headers) as response:
+            data = await response.read()
+            return json.loads(data)
 
     def get_calibrations(self) -> list:
-        calibrations = requests.get(f'{self.__server_address}calibrations', headers=self.__headers, verify=False)
+        calibrations = requests.get(f'{self.__server_address}{self.__calibrations_path}', headers=self.__headers, verify=False)
         return json.loads(calibrations.content)
 
     async def get_calibrations_async(self) -> list:
-        async with aiohttp.ClientSession() as session:
-            async with session.get(f'{self.__server_address}calibrations', headers=self.__headers) as response:
-                data = await response.read()
-                return json.loads(data)
+        if self.__session is None:
+            raise AttributeError('Session is None')
+        async with self.__session.get(f'{self.__server_address}{self.__calibrations_path}', headers=self.__headers) as response:
+            data = await response.read()
+            return json.loads(data)
