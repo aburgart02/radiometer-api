@@ -56,14 +56,35 @@ class RadiometerService:
                 data = await response.read()
                 return json.loads(data)
 
+    def get_measurements_with_data(self) -> list:
+        measurements = requests.get(f'{self.__server_address}measurements-with-data', headers=self.__headers, verify=False)
+        return json.loads(measurements.content)
+
+    async def get_measurements_with_data_async(self) -> list:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f'{self.__server_address}measurements-with-data', headers=self.__headers) as response:
+                data = await response.read()
+                return json.loads(data)
+
     def get_measurement(self, measurement_id: int) -> bytes:
-        measurement = requests.get(f'{self.__server_address}measurements/{measurement_id}', headers=self.__headers, verify=False)
-        return measurement.content
+        measurement = requests.get(f'{self.__server_address}measurement/{measurement_id}', headers=self.__headers, verify=False)
+        return json.loads(measurement.content)
 
     async def get_measurement_async(self, measurement_id: int) -> bytes:
         async with aiohttp.ClientSession() as session:
-            async with session.get(f'{self.__server_address}measurements/{measurement_id}', headers=self.__headers) as response:
-                return await response.read()
+            async with session.get(f'{self.__server_address}measurement/{measurement_id}', headers=self.__headers) as response:
+                data = await response.read()
+                return json.loads(data)
+
+    def get_measurement_with_data(self, measurement_id: int) -> bytes:
+        measurement = requests.get(f'{self.__server_address}measurement-with-data/{measurement_id}', headers=self.__headers, verify=False)
+        return json.loads(measurement.content)
+
+    async def get_measurement_with_data_async(self, measurement_id: int) -> bytes:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f'{self.__server_address}measurement-with-data/{measurement_id}', headers=self.__headers) as response:
+                data = await response.read()
+                return json.loads(data)
 
     def get_calibrations(self) -> list:
         calibrations = requests.get(f'{self.__server_address}calibrations', headers=self.__headers, verify=False)
