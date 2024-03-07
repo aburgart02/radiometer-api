@@ -3,7 +3,7 @@ import requests
 from aiohttp import ClientSession
 
 
-class RadiometerService:
+class RadiometerAPI:
     def __init__(self, server_address: str, token: str, session: ClientSession = None):
         if not server_address.endswith('/'):
             server_address += '/'
