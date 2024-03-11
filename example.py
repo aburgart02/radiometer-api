@@ -47,6 +47,7 @@ if __name__ == '__main__':
     session = aiohttp.ClientSession(loop=loop)
     radiometer_service = RadiometerAPI('https://localhost:7209/',
                                         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBcGlVc2VyIiwibmJmIjoxNzA5NzI0NDY0LCJleHAiOjE3MTUxMDg0MDAsImlzcyI6IlNlcnZlciIsImF1ZCI6IkNsaWVudCJ9.0-6FU8o7HuzrDxTAw1eytWMtjAsDudi6WT1S4CvEL3k',
+                                       False,
                                        session)
     check_requests()
     loop.run_until_complete(check_async_requests())
