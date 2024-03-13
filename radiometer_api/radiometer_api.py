@@ -43,78 +43,92 @@ class RadiometerAPI:
         self.__verify_ssl = verify_ssl
 
     def get_devices(self) -> list:
-        devices = requests.get(f'{self.__server_address}{self.__devices_path}', headers=self.__headers, verify=self.__verify_ssl)
+        devices = requests.get(f'{self.__server_address}{self.__devices_path}',
+                               headers=self.__headers, verify=self.__verify_ssl)
         return json.loads(devices.content)
 
     async def get_devices_async(self) -> list:
         if self.__session is None:
             raise AttributeError('Session is None')
-        async with self.__session.get(f'{self.__server_address}{self.__devices_path}', headers=self.__headers) as response:
+        async with self.__session.get(f'{self.__server_address}{self.__devices_path}',
+                                      headers=self.__headers, ssl=self.__verify_ssl) as response:
             data = await response.read()
             return json.loads(data)
 
     def get_patients(self) -> list:
-        patients = requests.get(f'{self.__server_address}{self.__patients_path}', headers=self.__headers, verify=self.__verify_ssl)
+        patients = requests.get(f'{self.__server_address}{self.__patients_path}',
+                                headers=self.__headers, verify=self.__verify_ssl)
         return json.loads(patients.content)
 
     async def get_patients_async(self) -> list:
         if self.__session is None:
             raise AttributeError('Session is None')
-        async with self.__session.get(f'{self.__server_address}{self.__patients_path}', headers=self.__headers) as response:
+        async with self.__session.get(f'{self.__server_address}{self.__patients_path}',
+                                      headers=self.__headers, ssl=self.__verify_ssl) as response:
             data = await response.read()
             return json.loads(data)
 
     def get_measurements(self) -> list:
-        measurements = requests.get(f'{self.__server_address}{self.__measurements_path}', headers=self.__headers, verify=self.__verify_ssl)
+        measurements = requests.get(f'{self.__server_address}{self.__measurements_path}',
+                                    headers=self.__headers, verify=self.__verify_ssl)
         return json.loads(measurements.content)
 
     async def get_measurements_async(self) -> list:
         if self.__session is None:
             raise AttributeError('Session is None')
-        async with self.__session.get(f'{self.__server_address}{self.__measurements_path}', headers=self.__headers) as response:
+        async with self.__session.get(f'{self.__server_address}{self.__measurements_path}',
+                                      headers=self.__headers, ssl=self.__verify_ssl) as response:
             data = await response.read()
             return json.loads(data)
 
     def get_measurements_with_data(self) -> list:
-        measurements = requests.get(f'{self.__server_address}{self.__measurements_with_data_path}', headers=self.__headers, verify=self.__verify_ssl)
+        measurements = requests.get(f'{self.__server_address}{self.__measurements_with_data_path}',
+                                    headers=self.__headers, verify=self.__verify_ssl)
         return json.loads(measurements.content)
 
     async def get_measurements_with_data_async(self) -> list:
         if self.__session is None:
             raise AttributeError('Session is None')
-        async with self.__session.get(f'{self.__server_address}{self.__measurements_with_data_path}', headers=self.__headers) as response:
+        async with self.__session.get(f'{self.__server_address}{self.__measurements_with_data_path}',
+                                      headers=self.__headers, ssl=self.__verify_ssl) as response:
             data = await response.read()
             return json.loads(data)
 
     def get_measurement(self, measurement_id: int) -> bytes:
-        measurement = requests.get(f'{self.__server_address}{self.__measurement_path}/{measurement_id}', headers=self.__headers, verify=self.__verify_ssl)
+        measurement = requests.get(f'{self.__server_address}{self.__measurement_path}/{measurement_id}',
+                                   headers=self.__headers, verify=self.__verify_ssl)
         return json.loads(measurement.content)
 
     async def get_measurement_async(self, measurement_id: int) -> bytes:
         if self.__session is None:
             raise AttributeError('Session is None')
-        async with self.__session.get(f'{self.__server_address}{self.__measurement_path}/{measurement_id}', headers=self.__headers) as response:
+        async with self.__session.get(f'{self.__server_address}{self.__measurement_path}/{measurement_id}',
+                                      headers=self.__headers, ssl=self.__verify_ssl) as response:
             data = await response.read()
             return json.loads(data)
 
     def get_measurement_with_data(self, measurement_id: int) -> bytes:
-        measurement = requests.get(f'{self.__server_address}{self.__measurement_with_data_path}/{measurement_id}', headers=self.__headers, verify=self.__verify_ssl)
+        measurement = requests.get(f'{self.__server_address}{self.__measurement_with_data_path}/{measurement_id}',
+                                   headers=self.__headers, verify=self.__verify_ssl)
         return json.loads(measurement.content)
 
     async def get_measurement_with_data_async(self, measurement_id: int) -> bytes:
         if self.__session is None:
             raise AttributeError('Session is None')
-        async with self.__session.get(f'{self.__server_address}{self.__measurement_with_data_path}/{measurement_id}', headers=self.__headers) as response:
+        async with self.__session.get(f'{self.__server_address}{self.__measurement_with_data_path}/{measurement_id}',
+                                      headers=self.__headers, ssl=self.__verify_ssl) as response:
             data = await response.read()
             return json.loads(data)
 
     def get_calibrations(self) -> list:
-        calibrations = requests.get(f'{self.__server_address}{self.__calibrations_path}', headers=self.__headers, verify=self.__verify_ssl)
+        calibrations = requests.get(f'{self.__server_address}{self.__calibrations_path}',
+                                    headers=self.__headers, verify=self.__verify_ssl)
         return json.loads(calibrations.content)
 
     async def get_calibrations_async(self) -> list:
         if self.__session is None:
             raise AttributeError('Session is None')
-        async with self.__session.get(f'{self.__server_address}{self.__calibrations_path}', headers=self.__headers) as response:
+        async with self.__session.get(f'{self.__server_address}{self.__calibrations_path}',
+                                      headers=self.__headers, ssl=self.__verify_ssl) as response:
             data = await response.read()
             return json.loads(data)
