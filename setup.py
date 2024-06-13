@@ -8,7 +8,7 @@ def readme():
 
 setup(
     name='radiometerAPI',
-    version='1.0.7',
+    version='1.0.9',
     author='aburgart02',
     author_email='',
     description='API for radiometer',
